@@ -1,0 +1,30 @@
+name: PR Actions
+on: [pull_request]
+jobs:
+  install-dependencies:
+    name: Install Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+
+      - uses: c-hive/gha-yarn-cache@v1
+
+      - name: Install 🗃
+        run: yarn install
+
+  tsc:
+    name: TS Check
+    runs-on: ubuntu-latest
+    needs: install-dependencies
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2.3.1
+
+      - uses: c-hive/gha-yarn-cache@v1
+
+      - name: Install 🗃
+        run: yarn install
+
+      - name: TS Check 🧐
+        run: yarn check-ts
