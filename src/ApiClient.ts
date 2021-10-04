@@ -31,7 +31,7 @@ class ApiClient {
     // Polls the API every five seconds and updates the data
     setInterval(() => {
       axios
-        .get("www.service.com/weather/api/data", {
+        .get<Data>("www.service.com/weather/api/data", {
           method: "GET",
           headers: {
             "x-api-token": this.API_TOKEN,
@@ -40,7 +40,13 @@ class ApiClient {
           },
         })
         .then((result) => {
-          this.data = result.data;
+          this.data = result.data.reduce((acc, curr): Data => {
+            if (curr.isNotValidData === false) {
+              return [...acc, curr];
+            } else {
+              return acc;
+            }
+          }, [] as Data);
         });
     }, 1000);
   };
