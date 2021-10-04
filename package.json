@@ -1,0 +1,16 @@
+{
+  "name": "tik-xq-code-review-challenge",
+  "version": "0.0.0",
+  "main": "index.ts",
+  "repository": "git@github.com:NitorCreations/tik-xq-code-review-challenge.git",
+  "author": "Riku Laukkanen <riku.laukkanen@nitor.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "ts-node index.ts"
+  },
+  "dependencies": {
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.3"
+  }
+}
