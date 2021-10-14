@@ -1,11 +1,23 @@
 import axios from "axios";
-import { Data } from "./types";
+import { CatFact, Data } from "./types";
+import { logger } from "./logger";
 
-export class ApiClient {
+export class WeatherApiClient {
   private data: Data = [];
 
   private API_TOKEN = "nLkMl7&BjO8V38XZ";
   private SERVICE_ID = "tango-india-kilo";
+
+  public fetchCatFacts = async (): Promise<CatFact[]> => {
+    const result = await axios.get<CatFact[]>("www.cats.com/api/cats", {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+      },
+    });
+
+    return result.data;
+  };
 
   // Updates the data once
   public updateOnce = (): void => {
@@ -39,16 +51,13 @@ export class ApiClient {
             accept: "application/json",
           },
         })
-        .then((result) => {
-          this.data = result.data.reduce((acc, curr): Data => {
-            if (curr.isNotValidData === false) {
-              return [...acc, curr];
-            } else {
-              return acc;
-            }
-          }, [] as Data);
+        .then(({ data }) => {
+          const formatted = data.filter((d) => d.isNotValidData !== false);
+          logger.log(formatted);
+
+          this.data = data;
         });
-    }, 1000);
+    }, 5000);
   };
 
   public get latest(): Data {
@@ -67,4 +76,4 @@ export class ApiClient {
   };
 }
 
-export const client = new ApiClient();
+export const client = new WeatherApiClient();

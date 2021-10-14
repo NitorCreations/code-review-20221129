@@ -9,3 +9,8 @@ export interface Datum {
 }
 
 export type Data = Array<Datum>;
+
+export interface CatFact {
+  id: string;
+  fact: string;
+}
