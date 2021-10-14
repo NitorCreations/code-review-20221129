@@ -4,7 +4,6 @@ import { logger } from "./logger";
 
 export class WeatherApiClient {
   private data: Data = [];
-
   private API_TOKEN = "nLkMl7&BjO8V38XZ";
   private SERVICE_ID = "tango-india-kilo";
 
@@ -15,7 +14,6 @@ export class WeatherApiClient {
         accept: "application/json",
       },
     });
-
     return result.data;
   };
 
@@ -54,7 +52,6 @@ export class WeatherApiClient {
         .then(({ data }) => {
           const formatted = data.filter((d) => d.isNotValidData !== false);
           logger.log(formatted);
-
           this.data = data;
         });
     }, 5000);
@@ -75,5 +72,4 @@ export class WeatherApiClient {
     );
   };
 }
-
 export const client = new WeatherApiClient();
